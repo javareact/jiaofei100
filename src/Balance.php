@@ -11,14 +11,14 @@ class Balance extends Client
 {
 
     /**
-     * 商户查询账户余额的接口
+     * 账户余额接口
      */
     public function balanceGet(): ApiResponse
     {
         $params = [
             //无参数
         ];
-        return $this->request("user/balance/get", $params);
+        return $this->request("Api/GetUserMoney.aspx", $params);
     }
 
 }

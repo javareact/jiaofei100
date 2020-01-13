@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Test\LFApi;
 
-
 use GuzzleHttp\Client;
 use JavaReact\LFApi\Order;
 use Monolog\Logger;
@@ -38,7 +37,7 @@ class OrderTest extends BaseTest
      */
     public function testTelPay()
     {
-        $response = $this->order->telPay(strval(time()), '13800138000', 100);
+        $response = $this->order->telPay('test', '13800138000', 100, 11, 33, 33, time(), 1, 1);
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());

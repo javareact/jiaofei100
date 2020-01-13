@@ -53,9 +53,6 @@ class ApiResponse
      */
     public function json(string $key = null, $default = null)
     {
-        if (strstr(strtolower($this->response->getHeaderLine('Content-Type')), 'application/json') === false) {
-            throw new ServerException('The Content-Type of response is not equal application/json');
-        }
         if (is_null($this->bodyBytes)) {
             $this->bodyBytes = $this->response->getBody()->getContents();
         }
@@ -77,7 +74,7 @@ class ApiResponse
      */
     public function isSuccess(bool $checkSign = true): bool
     {
-        if ($this->json("code") === 7000) {
+        if ($this->json("Code") === 10018) {
             if ($checkSign === true) {
                 return true;
             } else {
@@ -94,7 +91,7 @@ class ApiResponse
      */
     public function code(): int
     {
-        return (Integer)$this->json("code", -1); // 如果无则返回-1
+        return (Integer)$this->json("Code", -1); // 如果无则返回-1
     }
 
     /**
@@ -103,7 +100,7 @@ class ApiResponse
      */
     public function message(): string
     {
-        return $this->json("message");
+        return $this->json("Msg");
     }
 
     /**

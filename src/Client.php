@@ -62,9 +62,10 @@ abstract class Client
      * @param string $apiURI 请求地址
      * @param array $parameters 应用级参数
      * @param array $optionPara 可选参数
+     * @param bool $needApiId APIID是否参与签名
      * @return ApiResponse
      */
-    protected function request(string $apiURI, array $parameters = [], array $optionPara = []): ApiResponse
+    protected function request(string $apiURI, array $parameters = [], array $optionPara = [], $needApiId = true): ApiResponse
     {
         $this->logger->debug(sprintf("LFApi Request [%s] %s", 'GET', $apiURI));
         try {
@@ -81,12 +82,14 @@ abstract class Client
             if (empty($client->getConfig('base_uri'))) {
                 $apiURI = self::DEFAULT_GATEWAY . $apiURI;//缺省网关
             }
-            $parameters['api_id']    = $this->apiId;
-            $parameters['timestamp'] = intval(microtime(true) * 1000);//毫秒
-            $parameters['sign']      = $this->getSign($parameters);
-            $options['verify']       = false;//关闭SSL验证
-            $options["query"]        = $parameters;//查询字符串
-            $response                = $client->request('GET', $apiURI, $options);
+            $parameters['APIID'] = $this->apiId;
+            $parameters['Sign']  = $this->getSign($parameters, $needApiId);
+            $options['verify']   = false;//关闭SSL验证
+            if ($optionPara) {
+                $parameters = array_merge($parameters, $optionPara);//可选参数不参与签名
+            }
+            $options["query"] = $parameters;//查询字符串
+            $response         = $client->request('GET', $apiURI, $options);
         } catch (TransferException $e) {
             $message = sprintf("Something went wrong when calling fulu (%s).", $e->getMessage());
             $this->logger->error($message);
@@ -104,12 +107,12 @@ abstract class Client
      * @param array $parameters
      * @return string
      */
-    protected function getSign(array $parameters): string
+    protected function getSign(array $parameters, $needApiId): string
     {
-        if (array_key_exists("sign", $parameters)) {
-            unset($parameters["sign"]);
+        if (array_key_exists("Sign", $parameters)) {
+            unset($parameters["Sign"]);
         }
-        return Sign::getSign($parameters, $this->apiKey);
+        return Sign::getSign($parameters, $needApiId ? $this->apiId : null, $needApiId ? $this->apiKey : null);
     }
 
     /**

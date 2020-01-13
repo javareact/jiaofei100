@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace JavaReact\LFApi\Tools;
+
 /**
  * 璐付签名算法
  * Class Sign
@@ -11,27 +12,24 @@ namespace JavaReact\LFApi\Tools;
 class Sign
 {
     /**
+     * 计算签名
      * @param array $parameters
-     * @param string $secret
+     * @param $apiId
+     * @param $apiKey
      * @return string
      */
-    public static function getSign(array $parameters, string $secret): string
+    public static function getSign(array $parameters, $apiId, $apiKey): string
     {
-        //签名步骤一：排序
-        ksort($parameters, SORT_STRING);
-        $tmpArr = [];
-        //签名步骤二：去除空值
-        foreach ($parameters as $key => $item) {
-            if ($item === '' || $item === null) {
-                continue;
-            }
-            $tmpArr[] = $key . '=' . $item;
+        ksort($parameters, SORT_FLAG_CASE | SORT_STRING);//不分大小写排序
+        //中文URL_ENCODE
+        $str = http_build_query($parameters);
+        if (!is_null($apiId)) {
+            $str = "APIID=$apiId&" . $str;
         }
-        //签名步骤三：转化为字符串
-        $string = implode('&', $tmpArr);
-        //签名步骤四：在string后加入key
-        $string = $string . '&key=' . $secret;
-        //签名步骤五：MD5加密
-        return strtoupper(md5($string));
+        if (!is_null($apiKey)) {
+            $str = $str . "&APIKEY=$apiKey";
+        }
+        //转大写
+        return strtoupper(md5($str));
     }
 }
