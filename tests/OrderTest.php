@@ -103,4 +103,10 @@ class OrderTest extends BaseTest
         $this->assertSame(true, $response->isSuccess());
         $this->assertSame('15020190001', $response->result("api_id"));
     }
+
+    public function testGetCity()
+    {
+        $response = $this->order->getCity();
+        var_export($response);
+    }
 }

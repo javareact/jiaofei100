@@ -82,9 +82,9 @@ abstract class Client
             if (empty($client->getConfig('base_uri'))) {
                 $apiURI = self::DEFAULT_GATEWAY . $apiURI;//缺省网关
             }
-            $parameters['APIID'] = $this->apiId;
-            $parameters['Sign']  = $this->getSign($parameters, $needApiId);
-            $options['verify']   = false;//关闭SSL验证
+            $parameters['Sign'] = $this->getSign($parameters, $needApiId);
+            $options['verify']  = false;//关闭SSL验证
+            $needApiId && $parameters['APIID'] = $this->apiId;
             if ($optionPara) {
                 $parameters = array_merge($parameters, $optionPara);//可选参数不参与签名
             }

@@ -27,7 +27,7 @@ class Sign
             $str = "APIID=$apiId&" . $str;
         }
         if (!is_null($apiKey)) {
-            $str = $str . "&APIKEY=$apiKey";
+            $str = rtrim($str, '&') . "&APIKEY=$apiKey";
         }
         //转大写
         return strtoupper(md5($str));
