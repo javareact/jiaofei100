@@ -64,6 +64,7 @@ abstract class Client
      * @param array $optionPara 可选参数
      * @param bool $needApiId APIID是否参与签名
      * @return ApiResponse
+     * @throws ServerException
      */
     protected function request(string $apiURI, array $parameters = [], array $optionPara = [], $needApiId = true): ApiResponse
     {
