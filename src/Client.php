@@ -105,6 +105,7 @@ abstract class Client
 
     /**
      * 获取签名
+     *
      * @param array $parameters
      * @param $needApiId
      * @return string
@@ -125,12 +126,13 @@ abstract class Client
      */
     public function verifySign(array $parameters)
     {
-        if (!array_key_exists('sign', $parameters) || empty($parameters['sign'])) {
+        if (!array_key_exists('Sign', $parameters) || empty($parameters['Sign'])) {
             return false;
         }
-        $oriSign = $parameters['sign'];
+        $oriSign = $parameters['Sign'];
         unset($parameters['OrderInfo']);//不参与签名
-        $newSign = $this->getSign($parameters, false);//已经包含APIID
+        unset($parameters['APIID']);
+        $newSign = $this->getSign($parameters, true);
         if ($oriSign === $newSign) {
             return true;
         }
