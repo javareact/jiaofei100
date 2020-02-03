@@ -106,6 +106,7 @@ abstract class Client
     /**
      * 获取签名
      * @param array $parameters
+     * @param $needApiId
      * @return string
      */
     protected function getSign(array $parameters, $needApiId): string
@@ -118,6 +119,7 @@ abstract class Client
 
     /**
      * 验证签名
+     *
      * @param array $parameters POST数组
      * @return bool
      */
@@ -127,7 +129,8 @@ abstract class Client
             return false;
         }
         $oriSign = $parameters['sign'];
-        $newSign = $this->getSign($parameters);
+        unset($parameters['OrderInfo']);//不参与签名
+        $newSign = $this->getSign($parameters, false);//已经包含APIID
         if ($oriSign === $newSign) {
             return true;
         }
