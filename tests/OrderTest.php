@@ -97,7 +97,7 @@ class OrderTest extends BaseTest
      */
     public function testOrderGet()
     {
-        $response = $this->order->orderGet('1578467122');
+        $response = $this->order->getOrderInfo('1578467122','GetCombination');
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());

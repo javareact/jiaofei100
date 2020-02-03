@@ -264,13 +264,15 @@ class Order extends Client
      * @param string $ServiceType ServiceType=GetCombination（组合商品订单查询才传入不参与md5加密）
      * @return ApiResponse
      */
-    public function getOrderInfo($OrderID, $ServiceType)
+    public function getOrderInfo($OrderID, $ServiceType = '')
     {
-        $params = [
-            'OrderID'     => $OrderID,
+        $params     = [
+            'OrderID' => $OrderID,
+        ];
+        $optionPara = [
             'ServiceType' => $ServiceType,
         ];
-        return $this->request("Api/GetOrderInfo.aspx", $params);
+        return $this->request("Api/GetOrderInfo.aspx", $params, $optionPara);
     }
 
     /**
