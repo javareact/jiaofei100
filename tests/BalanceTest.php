@@ -36,7 +36,5 @@ class BalanceTest extends BaseTest
         $response = $this->balance->balanceGet();
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(true, $response->isSuccess());
-        $this->assertSame('15020190001', $response->result("api_id"));
     }
 }

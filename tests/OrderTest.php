@@ -37,7 +37,9 @@ class OrderTest extends BaseTest
      */
     public function testTelPay()
     {
-        $response = $this->order->telPay('test', '13800138000', 100, 11, 33, 33, time(), 1, 1);
+        $OrderID = time();
+        var_export($OrderID);
+        $response = $this->order->telPay('10', '13800138000', 1000, 1, 1000, $OrderID, time(), 1);
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());
@@ -49,7 +51,15 @@ class OrderTest extends BaseTest
      */
     public function testGprsPay()
     {
-        $response = $this->order->gprsPay(strval(time()), '13800138000', 500, 'MONTH', 1);
+        $TradeType  = '';
+        $Account    = '';
+        $UnitPrice  = '';
+        $BuyNum     = '';
+        $TotalPrice = '';
+        $OrderID    = '';
+        $CreateTime = '';
+        $IsCallBack = '';
+        $response   = $this->order->gprsPay($TradeType, $Account, $UnitPrice, $BuyNum, $TotalPrice, $OrderID, $CreateTime, $IsCallBack);
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());
@@ -57,28 +67,37 @@ class OrderTest extends BaseTest
     }
 
     /**
-     * 加油卡充值接口
+     * 游戏/卡密/卡券充值接口
      */
-    public function testOilPay()
+    public function testGamePay()
     {
-        $response = $this->order->oilPay(strval(time()), '1000113200005437747', 500);
+        if (!empty($_SERVER['SERVER_ADDR'])) {
+            $ip = $_SERVER['SERVER_ADDR'];
+        } elseif (!empty($_SERVER['SERVER_NAME'])) {
+            $ip = gethostbyname($_SERVER['SERVER_NAME']);
+        } else {
+            // for php-cli(phpunit etc.)
+            $ip = defined('PHPUNIT_RUNNING') ? '127.0.0.1' : gethostbyname(gethostname());
+        }
+        $ClientIP   = filter_var($ip, FILTER_VALIDATE_IP) ?: '127.0.0.1';
+        $ClientIP   = '171.15.120.149';
+        $GoodsID    = '23509681';
+        $IsCallBack = 1;
+        $TradeType  = '23';
+        $Account    = '800800800';
+        $UnitPrice  = 1000;
+        $BuyNum     = 1;
+        $TotalPrice = $UnitPrice * $BuyNum;
+        $OrderID    = time();
+        var_export($OrderID);
+        $CreateTime = date('YmdHis');
+
+        $response = $this->order->gamePay($TradeType, $Account, $UnitPrice, $BuyNum, $TotalPrice, $OrderID, $CreateTime, $IsCallBack, $GoodsID, $ClientIP);
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());
-        $this->assertSame('15020190001', $response->result("api_id"));
     }
 
-    /**
-     * 腾讯业务接口
-     */
-    public function testQqPay()
-    {
-        $response = $this->order->qqPay(strval(time()), '851347180', 1, 1);//查询不到产品
-        $this->dump($response);
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(true, $response->isSuccess());
-        $this->assertSame('15020190001', $response->result("api_id"));
-    }
 
     /**
      * 视频充值接口
@@ -89,7 +108,6 @@ class OrderTest extends BaseTest
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());
-        $this->assertSame('15020190001', $response->result("api_id"));
     }
 
     /**
@@ -97,11 +115,10 @@ class OrderTest extends BaseTest
      */
     public function testOrderGet()
     {
-        $response = $this->order->getOrderInfo('1578467122','GetCombination');
+        $response = $this->order->getOrderInfo('1580714659', '');
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());
-        $this->assertSame('15020190001', $response->result("api_id"));
     }
 
     public function testGetCity()

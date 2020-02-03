@@ -56,7 +56,7 @@ class ApiResponse
         if (is_null($this->bodyBytes)) {
             $this->bodyBytes = $this->response->getBody()->getContents();
         }
-        $data = json_decode($this->bodyBytes, true);
+        $data = json_decode($this->bodyBytes, true, 512, JSON_BIGINT_AS_STRING);
         if (is_null($key)) {
             return $data;
         }
