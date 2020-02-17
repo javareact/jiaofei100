@@ -130,9 +130,7 @@ abstract class Client
             return false;
         }
         $oriSign = $parameters['Sign'];
-        unset($parameters['OrderInfo']);//不参与签名
-        unset($parameters['APIID']);
-        $newSign = $this->getSign($parameters, true);
+        $newSign = strtoupper(md5("APIID={$this->apiId}&Account={$parameters['Account']}&OrderID={$parameters['OrderID']}&OutID={$parameters['OutID']}&State={$parameters['State']}&TradeType={$parameters['TradeType']}&TotalPrice={$parameters['TotalPrice']}&APIKEY={$this->apiKey}"));
         if ($oriSign === $newSign) {
             return true;
         }
