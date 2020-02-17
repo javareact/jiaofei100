@@ -30,7 +30,7 @@ class Order extends Client
             'UnitPrice'  => $UnitPrice,
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
         ];
         return $this->request("Api/PayMobile.aspx", $params);
     }
@@ -57,7 +57,7 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
         ];
         return $this->request("Api/PayMobileFlow.aspx", $params);
     }
@@ -85,7 +85,7 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
         ];
         return $this->request("Api/PayFixPhone.aspx", $params, [
             'Operator' => $Operator
@@ -116,7 +116,7 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
             'GoodsID'    => $GoodsID,
             'ClientIP'   => $ClientIP,
         ];
@@ -141,7 +141,7 @@ class Order extends Client
             'BuyNum'      => $BuyNum,
             'OrderID'     => $OrderID,
             'CreateTime'  => $CreateTime,
-            'isCallBack'  => $IsCallBack,
+            'IsCallBack'  => $IsCallBack,//大写
         ];
         return $this->request("Api/PayVideo.aspx", $params);
     }
@@ -194,7 +194,7 @@ class Order extends Client
             'TotalPrice'  => $TotalPrice,
             'OrderID'     => $OrderID,
             'CreateTime'  => $CreateTime,
-            'isCallBack'  => $IsCallBack,
+            'isCallBack'  => $IsCallBack,//小写
             'ServiceType' => $ServiceType,
         ];
         return $this->request("Api/GetTrafficBill.aspx", $params);
@@ -246,7 +246,7 @@ class Order extends Client
             'TotalPrice'  => $TotalPrice,
             'OrderID'     => $OrderID,
             'CreateTime'  => $CreateTime,
-            'isCallBack'  => $IsCallBack,
+            'isCallBack'  => $IsCallBack,//小写
             'ServiceType' => $ServiceType,
         ];
         return $this->request("Api/PayLife.aspx", $params);
@@ -476,7 +476,7 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
         ];
         return $this->request("Api/PayFuelCard.aspx", $params);
     }
@@ -525,7 +525,7 @@ class Order extends Client
             'OrderID'     => $OrderID,
             'CreateTime'  => $CreateTime,
             'ServiceType' => $ServiceType,
-            'isCallBack'  => $IsCallBack,
+            'IsCallBack'  => $IsCallBack,//大写
         ];
         return $this->request("Api/PaySendmessage.aspx", $params);
     }
@@ -555,7 +555,7 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,
+            'isCallBack' => $IsCallBack,//小写
             'GoodsID'    => $GoodsID,
             'ClientIP'   => $ClientIP
         ];
