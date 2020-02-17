@@ -74,7 +74,7 @@ class ApiResponse
      */
     public function isSuccess(bool $checkSign = true): bool
     {
-        if ($this->json("Code") === 10018) {
+        if ($this->json("Code") == '10018') {
             if ($checkSign === true) {
                 return true;
             } else {
@@ -110,7 +110,7 @@ class ApiResponse
      */
     public function result(string $key = null)
     {
-        $result = $this->json("data");
+        $result = $this->json();
         if (empty($key)) {
             return $result;
         }
