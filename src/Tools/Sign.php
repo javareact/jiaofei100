@@ -16,10 +16,20 @@ class Sign
      * @param array $parameters
      * @param $apiId
      * @param $apiKey
+     * @param $reverseCallBack
      * @return string
      */
-    public static function getSign(array $parameters, $apiId, $apiKey): string
+    public static function getSign(array $parameters, $apiId, $apiKey, $reverseCallBack): string
     {
+        if ($reverseCallBack) {
+            if (isset($parameters['IsCallBack'])) {
+                $parameters['isCallBack'] = $parameters['IsCallBack'];
+                unset($parameters['IsCallBack']);
+            } elseif (isset($parameters['isCallBack'])) {
+                $parameters['IsCallBack'] = $parameters['isCallBack'];
+                unset($parameters['isCallBack']);
+            }
+        }
         ksort($parameters, SORT_FLAG_CASE | SORT_STRING);//不分大小写排序
         //中文URL_ENCODE
         $str = http_build_query($parameters);

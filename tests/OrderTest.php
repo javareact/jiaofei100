@@ -105,7 +105,7 @@ class OrderTest extends BaseTest
     public function testVideoPay()
     {
         $CreateTime = date('YmdHis');
-        $response = $this->order->videoPay('13800138000', 6666666,1,strval(time()), $CreateTime,1);//查询不到产品
+        $response   = $this->order->videoPay('13800138000', 6666666, 1, strval(time()), $CreateTime, 1);//查询不到产品
         $this->dump($response);
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame(true, $response->isSuccess());

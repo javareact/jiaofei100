@@ -116,11 +116,11 @@ class Order extends Client
             'TotalPrice' => $TotalPrice,
             'OrderID'    => $OrderID,
             'CreateTime' => $CreateTime,
-            'isCallBack' => $IsCallBack,//小写
+            'IsCallBack' => $IsCallBack,//小写
             'GoodsID'    => $GoodsID,
             'ClientIP'   => $ClientIP,
         ];
-        return $this->request("Api/PayGame.aspx", $params);
+        return $this->request("Api/PayGame.aspx", $params,[],true,true);
     }
 
     /**

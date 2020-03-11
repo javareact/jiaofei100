@@ -63,10 +63,10 @@ abstract class Client
      * @param array $parameters 应用级参数
      * @param array $optionPara 可选参数
      * @param bool $needApiId APIID是否参与签名
+     * @param bool $reverseCallBack 是否反转
      * @return ApiResponse
-     * @throws ServerException
      */
-    protected function request(string $apiURI, array $parameters = [], array $optionPara = [], $needApiId = true): ApiResponse
+    protected function request(string $apiURI, array $parameters = [], array $optionPara = [], $needApiId = true, bool $reverseCallBack = false): ApiResponse
     {
         $this->logger->debug(sprintf("LFApi Request [%s] %s", 'GET', $apiURI));
         try {
@@ -83,7 +83,7 @@ abstract class Client
             if (empty($client->getConfig('base_uri'))) {
                 $apiURI = self::DEFAULT_GATEWAY . $apiURI;//缺省网关
             }
-            $parameters['Sign'] = $this->getSign($parameters, $needApiId);
+            $parameters['Sign'] = $this->getSign($parameters, $needApiId, $reverseCallBack);
             $options['verify']  = false;//关闭SSL验证
             $needApiId && $parameters['APIID'] = $this->apiId;
             if ($optionPara) {
@@ -108,14 +108,15 @@ abstract class Client
      *
      * @param array $parameters
      * @param $needApiId
+     * @param $reverseCallBack
      * @return string
      */
-    protected function getSign(array $parameters, $needApiId): string
+    protected function getSign(array $parameters, $needApiId, $reverseCallBack): string
     {
         if (array_key_exists("Sign", $parameters)) {
             unset($parameters["Sign"]);
         }
-        return Sign::getSign($parameters, $needApiId ? $this->apiId : null, $needApiId ? $this->apiKey : null);
+        return Sign::getSign($parameters, $needApiId ? $this->apiId : null, $needApiId ? $this->apiKey : null, $reverseCallBack);
     }
 
     /**
