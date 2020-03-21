@@ -91,7 +91,7 @@ class ApiResponse
      */
     public function code(): int
     {
-        return (Integer)$this->json("Code", -1); // 如果无则返回-1
+        return $this->json("Code", '-1'); // 如果无则返回-1
     }
 
     /**
