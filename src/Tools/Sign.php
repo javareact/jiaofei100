@@ -31,8 +31,12 @@ class Sign
             }
         }
         ksort($parameters, SORT_FLAG_CASE | SORT_STRING);//不分大小写排序
-        //中文URL_ENCODE
-        $str = http_build_query($parameters);
+        //中文不能URL_ENCODE
+        $str = '';
+        foreach ($parameters as $key => $value) {
+            $str .= $key . '=' . $value . '&';
+        }
+        $str = rtrim($str, '&');
         if (!is_null($apiId)) {
             $str = "APIID=$apiId&" . $str;
         }
