@@ -6,7 +6,6 @@ namespace JavaReact\LFApi\Tools;
 
 /**
  * 璐付签名算法
- * Class Sign
  * @package JavaReact\LFApi
  */
 class Sign
